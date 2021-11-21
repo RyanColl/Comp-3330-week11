@@ -1,58 +1,33 @@
 <div class="content" role="main">
     <h2>Movies</h2>
+    <div class="counter-div"><button class="counter" (click)="pageDown()">-</button><h3>{{pageCount}} / 10</h3><button class="counter" (click)="pageUp()">+</button></div>
     <div *ngIf="Pages.length>0" class="card-container">
-      <a class="card">
+      <a *ngFor="let movie of Pages[pageCount].results" class="card" (click)="showMovie(movie.id)">
+        <div class="image-holder">
+          <img src="https://image.tmdb.org/t/p/w200/{{movie.poster_path}}" />
+        </div>
+        <div class="card-content">
+          <h3>{{movie.title}}</h3>
+          <div class="meta-data">
+            <span>Release Date: {{movie.release_date}}</span>
+            <span>Original Language: {{movie.original_language}}</span>
+          </div>
+          <div class="overview" >
+            <span >{{movie.overview.substr(0, 60).concat('...')}}</span>
+          </div>
+        </div>
         
       </a>
     </div>
+    <movie-modal  [(visible)]="showCard" [(currentMovie)]="currentMovie">
+      <h1>Hello World</h1>
+      <button (click)="showCard = !showCard" class="btn">Close</button>
+    </movie-modal>
   
-    <!-- Next Steps -->
-    <h2>Next Steps</h2>
-    <p>What do you want to do next with your app?</p>
-  
-    <input type="hidden" #selection>
-  
-    <div class="card-container">
-      <button class="card card-small" (click)="selection.value = 'component'" tabindex="0">
-        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        <span>New Component</span>
-      </button>
-  
-      <button class="card card-small" (click)="selection.value = 'material'" tabindex="0">
-        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        <span>Angular Material</span>
-      </button>
-  
-      <button class="card card-small" (click)="selection.value = 'pwa'" tabindex="0">
-        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        <span>Add PWA Support</span>
-      </button>
-  
-      <button class="card card-small" (click)="selection.value = 'dependency'" tabindex="0">
-        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        <span>Add Dependency</span>
-      </button>
-  
-      <button class="card card-small" (click)="selection.value = 'test'" tabindex="0">
-        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        <span>Run and Watch Tests</span>
-      </button>
-  
-      <button class="card card-small" (click)="selection.value = 'build'" tabindex="0">
-        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        <span>Build for Production</span>
-      </button>
-    </div>
-  
-    <!-- Terminal -->
-    <div class="terminal" [ngSwitch]="selection.value">
-        <pre *ngSwitchDefault>ng generate component xyz</pre>
-        <pre *ngSwitchCase="'material'">ng add @angular/material</pre>
-        <pre *ngSwitchCase="'pwa'">ng add @angular/pwa</pre>
-        <pre *ngSwitchCase="'dependency'">ng add _____</pre>
-        <pre *ngSwitchCase="'test'">ng test</pre>
-        <pre *ngSwitchCase="'build'">ng build</pre>
-    </div>
+    
+    
+    
+    
   
     <!-- Links -->
     <div class="card-container">

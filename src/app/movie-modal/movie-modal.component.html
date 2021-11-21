@@ -1,0 +1,18 @@
+<div *ngIf="visible" class="dialog card">
+  <div class="image-holder">
+    <img src="https://image.tmdb.org/t/p/w200/{{currentMovie.poster_path}}" />
+  </div>
+  <div class="card-content-modal">
+    <h3>{{currentMovie.title}}</h3>
+    <div class="meta-data">
+      <span>Release Date: {{currentMovie.release_date}}</span>
+      <span>Original Language: {{currentMovie.original_language}}</span>
+    </div>
+    <div class="modaloverview">
+      <span>{{currentMovie.overview.substr(0, 600).concat('...')}}</span>
+    </div>
+  </div>
+  <button style="cursor: pointer;" *ngIf="closable" (click)="close()" aria-label="Close"
+    class="dialog__close-btn">X</button>
+</div>
+<div *ngIf="visible" class="overlay" (click)="close()"></div>

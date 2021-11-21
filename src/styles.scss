@@ -52,23 +52,72 @@
     border-radius: 4px;
     border: 1px solid #eee;
     background-color: #fafafa;
-    min-height: 40px;
+    min-height: 449px;
+    height: 450px;
+    max-height: 451px;
     min-width: 249px;
     width: 250px;
     max-width: 251px;
     margin: 0 8px 16px;
     padding: 16px;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     transition: all 0.2s ease-in-out;
-    line-height: 24px;
+    line-height: 23px;
+  }
+  .modaloverview {
+    margin-top: 10px;
+    width: 90%;
+    min-height: 178px;
+    height: 178px;
+    max-height: 178px;
+  }
+  h3 {
+    text-align: center;
+  }
+  .overview {
+    text-align: center;
+  }
+  .meta-data {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .card-content {
+    overflow: visible;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .card-content-modal {
+    overflow: visible;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    min-height: 249px;
+    height: 250px;
+    max-height: 251px;
+  }
+  .image-holder {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 249px;
+    height: 250px;
+    max-height: 251px;
   }
 
   .card-container .card:not(:last-child) {
     margin-right: 0;
   }
+
 
   .card.card-small {
     height: 16px;
@@ -253,4 +302,77 @@
       display: none;
       visibility: hidden;
     }
+  }
+
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  .dialog {
+    
+    z-index: 1000;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    min-height: 350px;
+    height: 350px;
+    max-height: 350px;
+    min-width: 500px;
+    width: 500px;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 12px;
+    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  @media (min-width: 768px) {
+    .dialog {
+      top: 40px;
+    }
+  }
+  
+  .dialog__close-btn {
+    border: 0;
+    background: none;
+    color: #2d2d2d;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 1.2em;
+  }
+
+
+  .modal {
+    all: unset;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    background-color: #fafafa;
+    min-height: 449px;
+    height: 450px;
+    max-height: 500px;
+    min-width: 249px;
+    width: 250px;
+    max-width: 400px;
+    margin: 0 8px 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    line-height: 24px;
   }

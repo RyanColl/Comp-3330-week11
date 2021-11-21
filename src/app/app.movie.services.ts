@@ -1,25 +1,19 @@
-import { Movie, Page } from "./app.types";
+import { Genre, Movie, Page } from "./app.types";
 
 export class MovieServices {
-  api =
+  public api =
     'https://api.themoviedb.org/3/discover/movie?api_key=8b11459382e47f442aaf2d04e56fd17d&language=en-US&sort_by=popularity.desc&include_video=true';
-  error!: any;
+  public error!: any;
+  private genreApi = 'https://api.themoviedb.org/3/genre/movie/list?api_key=8b11459382e47f442aaf2d04e56fd17d&language=en-US'
   // private Pages: Page[] = [];
-  private awaitPages(): Promise<Page[]> {
+  public awaitGenres(): Promise<Genre[]> {
     return new Promise((res, rej) => {
-      let pages: Page[] = [];
-      for (let i = 0; i < 10; i++) {
-        fetch(`${this.api}&page=${i + 1}`)
+      fetch(this.genreApi)
           .then((data) => data.json())
-          .then((result) => pages.push(result))
+          .then((result) => {
+            res(result.genres)
+          })
           .catch((e) => (this.error = e));
-          res(pages)
-      }
     })
-  }
-  public getPages(): Promise<Page[]> {
-      return this.awaitPages().then((pages: Page[]) => {
-        return(pages);
-      })
   }
 }
