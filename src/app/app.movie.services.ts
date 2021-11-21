@@ -16,4 +16,29 @@ export class MovieServices {
           .catch((e) => (this.error = e));
     })
   }
+  public awaitPages() {
+    const fn = (i: number) => {
+      return new Promise((res, rej) => {
+        fetch(`${this.api}&page=${i + 1}`).then((data) => data.json())
+        .then((result) => {
+          res(result)
+        })
+      })
+    }
+    return new Promise((res, rej) => {
+      let pages: Page[] = []
+      for(let i = 0; i<10; i++) {
+         fn(i).then(r => {
+           // @ts-ignore
+          pages = [...pages, r] 
+          if(i === 9) {
+            console.log(pages) 
+            res(pages)
+          }         
+         }) 
+      }     
+      
+    })
+    
+  }
 }

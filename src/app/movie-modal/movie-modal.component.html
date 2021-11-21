@@ -9,7 +9,7 @@
       <span>Original Language: {{currentMovie.original_language}}</span>
     </div>
     <div class="modaloverview">
-      <span>{{currentMovie.overview.substr(0, 600).concat('...')}}</span>
+      <span>{{currentMovie.overview.substr(0, 300).concat('...')}}</span>
     </div>
   </div>
   <button style="cursor: pointer;" *ngIf="closable" (click)="close()" aria-label="Close"

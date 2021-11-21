@@ -9,35 +9,41 @@ import { Genre, Movie, Page } from '../app.types';
 })
 
 export class HomeComponent implements OnInit {
+  title = 'Movies'; pageTotal = 10;
   Pages:Page[] = [];
   services!: MovieServices;
   Movies: Movie[] = []; displayedMovies: Movie[] = [];
   Page!: Page; pageCount: number = 1;
   Genres: Genre[] = []; currentGenre!: Genre;
   showCard: boolean = false; currentMovie!: Movie;
+  selected = 'option2'; displayedPages: Page[] = [];
   constructor(MovieServices: MovieServices) {
     this.services = MovieServices;
   }
   ngOnInit(): void {
     this.services.awaitGenres().then(genres => {
       this.Genres = genres
+      console.log(this.Genres)
     }).then(() => {
-      for (let i = 0; i < 10; i++) {
-        fetch(`${this.services.api}&page=${i+1}`)
-          .then((data) => data.json())
-          .then((page) => {
-            this.Pages = [...this.Pages, ...[page]]
-            this.Movies = [...this.Movies, ...page.results]
-            this.displayedMovies = this.Pages[0].results
-            console.log(this.displayedMovies)
-          })
-          .catch((e) => (this.services.error = e));
-      }
+      this.services.awaitPages().then(pages => {
+        //@ts-ignore
+        this.Pages = pages
+        this.Pages.forEach((page: Page) => {
+          this.Movies = [...this.Movies, ...page.results]
+        })
+        this.pageTotal = this.Pages.length
+      })
     })
   }
 
   /* page interactions */
   pageUp(){
+    if(this.displayedPages.length>0) {
+      console.log(this.pageCount, this.pageTotal)
+      if(this.pageCount >= this.pageTotal) {
+        return
+      }
+    }
     if(this.pageCount>=10){return}
     this.pageCount = this.pageCount + 1
   }
@@ -45,8 +51,41 @@ export class HomeComponent implements OnInit {
     if(this.pageCount<=1){return}
     this.pageCount = this.pageCount - 1
   }
-  displayGenre(genre: string) {
+  displayGenre(genre: Genre) {
+    this.pageCount = 1;
+    this.currentGenre = genre
+    this.displayedMovies = this.Movies.filter((movie: Movie) => {
+      return movie.genre_ids.includes(genre.id)
+    })
+    let pages: Page[] = []
+    let page: Page = {
+      page: 1,
+      totalPages: 0,
+      totalResults: 0,
+      results: []
+    }
     
+    this.displayedMovies.forEach((movie: Movie, i: number) => {
+      if(i%20===0 && i!==0) {
+        pages.push(page)
+        page = {...page, results: []}
+      }
+      page = {...page, ...{
+        page: ((~~(i/20))+1),
+        totalPages: 0,
+        totalResults: 0,
+        results: [...page.results, movie]
+      }}
+      if(i+1 === this.displayedMovies.length) {
+        console.log('here',page)
+        pages.push(page)
+        return;
+      }
+      
+    })  
+    this.displayedPages = pages
+    this.pageTotal = this.displayedPages.length
+    console.log(this.displayedPages.length, this.displayedMovies.length)
   }
   showMovie(id: number) {
     this.showCard = !this.showCard
@@ -55,10 +94,14 @@ export class HomeComponent implements OnInit {
         return movie.id === id
       })
       this.currentMovie = currentMovie;
-      console.log(this.currentMovie)
     }
   }
-
+  displayAll() {
+    this.displayedPages = []
+    this.displayedMovies = []
+    this.pageTotal = this.Pages.length
+    this.pageCount = 1;
+  }
 }
 
 

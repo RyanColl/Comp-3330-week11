@@ -6,7 +6,7 @@ export interface Movie {
     backdrop_path: string;
     overview: string;
     poster_path: string;
-    genreIds: number[];
+    genre_ids: number[];
   }
 
 export interface Genre {
