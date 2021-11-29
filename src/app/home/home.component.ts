@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
     this.displayedMovies = this.Movies.filter((movie: Movie) => {
       return movie.genre_ids.includes(genre.id)
     })
-    let pages: Page[] = []
+    const pages: Page[] = []
     let page: Page = {
       page: 1,
       totalPages: 0,
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
     })  
     this.displayedPages = pages
     this.pageTotal = this.displayedPages.length
-    console.log(this.displayedPages.length, this.displayedMovies.length)
+    console.log(`pagelength: ${this.displayedPages.length}, movielength: ${this.displayedMovies.length}`)
   }
   showMovie(id: number) {
     this.showCard = !this.showCard
