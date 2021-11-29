@@ -1,6 +1,6 @@
 # COMP 3330 - Week 11 - Lab
 
-Ryan Collicutt - A00888552
+Ryan Collicutt - A00888552 | https://complabs2.web.app
 
 # Week 11
 
@@ -214,3 +214,8 @@ home.component.ts
 My app.movie.services.ts holds the logic in calling the api and returning the data in a promise. And my app.types.ts contains the type definitions for all of the object structure for the api data. 
 
 Overall, I am proud of my app and would use angular again in the future.
+
+
+# Hosted 
+# @
+# https://complabs2.web.app
